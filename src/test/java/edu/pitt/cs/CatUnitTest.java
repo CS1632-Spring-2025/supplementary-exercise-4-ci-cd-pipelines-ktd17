@@ -21,13 +21,17 @@ public class CatUnitTest {
 	 * test case.
 	 */
 
-	Cat c; // cat object
+	 RentACat r; // Object to test
+	 Cat c1; // cat object
 
 	@Before
 	public void setUp() throws Exception {
 		// INITIALIZE THE TEST FIXTURE
 
 		// Create a Cat with ID 1 and name "Jennyanydots", assign to c using a call to Cat.createInstance(InstanceType, int, String).
+		c1 = Mockito.mock(Cat.class);
+        Mockito.when(c1.getName()).thenReturn("Jennyanydots");
+        Mockito.when(c1.getId()).thenReturn(1);
 		// Passing InstanceType.IMPL as the first parameter will create a real cat using your CatImpl implementation.
 		// Passing InstanceType.MOCK as the first parameter will create a mock cat using Mockito.
 		// Which type is the correct choice for this unit test?  I'll leave it up to you.  The answer is in the Unit Testing Part 2 lecture. :)
@@ -38,7 +42,8 @@ public class CatUnitTest {
 	public void tearDown() throws Exception {
 		// Not necessary strictly speaking since the references will be overwritten in
 		// the next setUp call anyway and Java has automatic garbage collection.
-		c = null;
+		r = null;
+		c1 = null;
 	}
 
 	/**
@@ -94,7 +99,12 @@ public class CatUnitTest {
 	 */
 	@Test
 	public void testToString() {
-		// TODO: Fill in
+		String expected = "ID 1. Jennyanydots";
+		r.addCat(c1);
+
+		Mockito.when(c1.toString()).thenReturn("ID 1. Jennyanydots");
+
+		assertEquals("r.catList() does not return the proper list of cats", expected, r.listCats());
 	}
 
 	/**
